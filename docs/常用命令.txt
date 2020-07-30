@@ -1,0 +1,126 @@
+ 
+http://spark.apache.org/documentation.html
+http://spark.apache.org/docs/1.6.1/sql-programming-guide.html 
+https://issues.apache.org/jira/browse/SPARK-8333
+
+ 
+//��ģ����ܼ�-D qyztyh_conf=/home/gdtec/qyztyh/qyztyh_conf.properties
+hadoop jar /home/gdtec/qyztyh/qyztyh-0.0.1-SNAPSHOT-fat.jar -D qyztyh_conf=/home/gdtec/qyztyh/qyztyh_conf.properties DataCollector -copyToLocal true -ftpFile /home/gdtec/qyztyh/ftpServers.txt -checkInterval 3 -dateTime 2017120416
+
+
+hadoop jar /home/gdtec/qyztyh/qyztyh-0.0.1-SNAPSHOT-fat.jar DataCollector -copyToLocal true -ftpFile /home/gdtec/qyztyh/ftpServers.txt -checkInterval 3 -dateTime 2017120416
+
+
+hadoop jar /home/gdtec/qyztyh/qyztyh-0.0.1-SNAPSHOT-fat.jar DataCollector -copyToLocal false -ftpFile /home/gdtec/qyztyh/ftpServers.txt -checkInterval 3 -dateTime 2017120416
+
+
+nohup hadoop --config /home/gdtec/hadoop-conf jar /home/noce/run_noce/jars/noce-3.0.2.jar main.NoceDataCollector -collectors cdr -startTime 2016082600 >/dev/null 2>&1 &
+
+
+hadoop jar ./qyztyh-0.0.1-SNAPSHOT-fat.jar DataCollector -copyToLocal true -checkInterval 10 -dateTime 2017120416 -ftpFile ./ftpServers.txt >/dev/null 2>&1 &
+
+
+rpm -ivh your-package.rpm
+rpm -qa | grep ftp
+
+ 
+http://10.17.35.66:8088/cluster
+http://132.126.56.3:8088/cluster
+http://10.17.35.66:50070
+
+su - cuitao
+
+su - xiangdy 
+
+
+kinit -kt /home/xiangdy/xiangdy.keytab xiangdy/opensource@GSTA.COM
+
+tar -zxvf hadoop-2.7.4.tar.gz ./
+
+tar -zxvf hadoop-2.7.4.tar.gz
+tar -cvzf common.test2.tar.gz common.test2
+
+
+hadoop jar /home/xiangdy/qyztyh-0.0.1-SNAPSHOT-fat.jar HdfsKerberos
+
+
+hdfs getconf -namenodes
+���: host-9-66 host-9-136 host-9-65
+hdfs haadmin -getServiceState host-9-66
+
+
+�ɼ���������
+hadoop jar ./qyztyh-0.0.1-SNAPSHOT-fat.jar DataCollector -copyToLocal true -dateTime 2017120416
+
+scp -r PM_2G_SRC 10.17.35.66:~/qyztyh
+
+hadoop fs -copyFromLocal DATA /user/noce/
+
+ETL��������
+nohup spark-submit --class DataETL --master yarn-client --driver-memory 4g --executor-memory 8g --executor-cores 1 --num-executors 5 --conf "spark.executor.extraJavaOptions=-XX:+PrintGCDetails -XX:+PrintGCTimeStamps" qyztyh-0.0.1-SNAPSHOT-fat.jar -dateTime 2017120416 -daemon false -etlTypes PM_2G_AL,PM_2G_HW,PM_2G_ZTE >/dev/null 2>&1 &
+
+
+spark-submit --class DataETL --master yarn-client --driver-memory 2g --executor-memory 2g --executor-cores 1 --num-executors 5 --conf "spark.executor.extraJavaOptions=-XX:+PrintGCDetails -XX:+PrintGCTimeStamps" qyztyh-0.0.1-SNAPSHOT-fat.jar -dateTime 2017120416 -daemon false -etlTypes PM_2G_AL,PM_2G_HW,PM_2G_ZTE
+
+
+
+hadoop fs -ls /user/noce/DATA/PUBLIC/NOCE/SRC
+hadoop fs -rm -r -skipTrash /user/noce/DATA/PUBLIC/NOCE/SRC/*
+hadoop fs -mkdir -p /user/noce/DATA/PUBLIC/NOCE/SRC
+
+hadoop fs -ls /user/noce/DATA/PUBLIC/NOCE/ETL/CDMAPM/ZTE/ETL_ZTE_R_T_GgrpTgtBSSHo/2017120416
+
+
+hadoop fs -copyFromLocal /home/xiangdy/qyztyh/PM_2G_SRC/* /user/noce/DATA/PUBLIC/NOCE/SRC/
+
+ll /home/gdtec/qyztyh/PM_2G_SRC/PM_2G_HW/*/*/*/* |wc -l
+
+hadoop fs -ls /user/noce/DATA/PUBLIC/NOCE/ETL/CDMAPM/_MD_
+hadoop fs -cat /user/noce/DATA/PUBLIC/NOCE/ETL/CDMAPM/_MD_/metaData.txt
+
+
+hadoop fs -rm -r -skipTrash /user/noce/DATA/PUBLIC/NOCE/ETL/CDMAPM/AL/*/2017120416
+hadoop fs -rm -r -skipTrash /user/noce/DATA/PUBLIC/NOCE/ETL/CDMAPM/HW/*/2017120416
+hadoop fs -rm -r -skipTrash /user/noce/DATA/PUBLIC/NOCE/ETL/CDMAPM/ZTE/*/2017120416
+hadoop fs -rm -skipTrash /user/noce/DATA/PUBLIC/NOCE/ETL/CDMAPM/_MD_/metaData.txt
+
+-XX:MaxPermSize=1024m
+-Xms256m -Xmx1024m
+
+
+���:
+build.bat -p 1.0.0
+
+ETL�������� (��ָ��-etlTypes����ʱ���������͵�ETL����)
+
+spark-submit --class DataETL --master yarn-client --driver-memory 2g --executor-memory 4g --executor-cores 1 --num-executors 5 --conf "spark.executor.extraJavaOptions=-XX:+PrintGCDetails -XX:+PrintGCTimeStamps" /home/xiangdy/qyztyh/qyztyh-1.0.0-all.jar -dateTime 2017120416 -daemon false -etlTypes PM_2G_AL,PM_2G_HW,PM_2G_ZTE
+
+
+
+������������ (��ָ��-analysisTypes����ʱ���������͵ķ�������)
+
+spark-submit --class DataAnalysis --master yarn-client --driver-memory 2g --executor-memory 2g --executor-cores 1 --num-executors 5 --conf "spark.executor.extraJavaOptions=-XX:+PrintGCDetails -XX:+PrintGCTimeStamps" /home/xiangdy/qyztyh/qyztyh-1.0.0-all.jar -dateTime 2017120416 -analysisTypes AL_PM_KPI_COUNT,HW_PM_KPI_COUNT,ZTE_PM_KPI_COUNT
+
+
+spark-submit --class DataAnalysis --master yarn-client --driver-memory 2g --executor-memory 2g --executor-cores 1 --num-executors 5 --conf "spark.executor.extraJavaOptions=-XX:+PrintGCDetails -XX:+PrintGCTimeStamps" /home/xiangdy/qyztyh/qyztyh-1.0.0-all.jar -dateTime 2017120416 -analysisTypes PM_BUSY_KPI_COUNT
+
+
+�鿴��������
+http://10.17.35.66:8088/cluster
+
+hadoop fs -ls /user/noce/DATA/PUBLIC/NOCE/ETL/CDMAPM/ZTE/
+hadoop fs -ls /user/noce/DATA/PUBLIC/NOCE/ETL/CDMAPM/ZTE/ETL_ZTE_R_B_CCONVOCMOCALL/2017120416
+
+hadoop fs -ls /user/noce/DATA/PUBLIC/NOCE/SRC
+
+
+hadoop fs -mkdir /user/noce/DATA/PUBLIC/NOCE/ETL/CDMAPM/ZTE/ETL_ZTE_R_B_CCONVOCMOCALL/2017120416
+hadoop fs -mkdir /user/noce/DATA/PUBLIC/NOCE/ETL/CDMAPM/ZTE/ETL_ZTE_R_B_CVOCMTCALL/2017120416
+hadoop fs -mkdir /user/noce/DATA/PUBLIC/NOCE/ETL/CDMAPM/ZTE/ETL_ZTE_R_B_CSMSMO/2017120416
+
+more qyztyh.log |grep Exception
+
+
+
+hadoop fs -du /user/noce/DATA/PUBLIC/NOCE/AGG/
+
